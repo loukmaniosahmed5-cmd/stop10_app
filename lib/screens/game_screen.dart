@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../main.dart';
+import '../widgets/banner_ad_widget.dart';
 import 'result_screen.dart';
 
 class GameScreen extends StatefulWidget {
@@ -98,7 +99,9 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
                   child: Text(_enCours ? 'STOP' : 'START'),
                 ),
               ),
-              const Spacer(),
+             const Spacer(),
+              const BannerAdWidget(),
+              const SizedBox(height: 8),
             ],
           ),
         ),

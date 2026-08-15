@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
+import '../widgets/banner_ad_widget.dart';
 import 'game_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -74,7 +75,9 @@ class HomeScreen extends StatelessWidget {
                     child: const Text('START'),
                   ),
                 ),
-                const Spacer(),
+               const Spacer(),
+                const BannerAdWidget(),
+                const SizedBox(height: 8),
               ],
             ),
           ),

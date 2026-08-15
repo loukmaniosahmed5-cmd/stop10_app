@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(const Stop10App());
 }
-
 /// Palette reprise de l'icône : fond bleu-nuit très sombre, bordure
 /// dégradée bleu → rose néon, rouge pour le viseur/l'aiguille.
 class AppColors {

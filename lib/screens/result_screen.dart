@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../main.dart';
+import '../widgets/banner_ad_widget.dart';
 import 'home_screen.dart';
-import 'game_screen.dart';
+import 'game_screen.dart'; 
 
 class ResultScreen extends StatefulWidget {
   final double temps;
@@ -115,7 +116,10 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
                 child: const Text("Retour à l'accueil", style: TextStyle(color: Colors.white38, fontSize: 13)),
               ),
-              const Spacer(),
+             
+             const Spacer(),
+              const BannerAdWidget(),
+              const SizedBox(height: 8),
             ],
           ),
         ),
