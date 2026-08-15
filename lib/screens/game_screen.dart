@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../main.dart';
 import 'result_screen.dart';
 
@@ -27,6 +28,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
   }
 
   void _start() {
+    HapticFeedback.lightImpact();
     _chrono
       ..reset()
       ..start();
@@ -34,6 +36,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
   }
 
   void _stop() {
+    HapticFeedback.mediumImpact();
     _chrono.stop();
     final tempsMs = _chrono.elapsedMilliseconds;
     final tempsSec = ((tempsMs / 10).round()) / 100.0;

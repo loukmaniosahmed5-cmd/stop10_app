@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../main.dart';
 import 'home_screen.dart';
 import 'game_screen.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   final double temps;
   const ResultScreen({super.key, required this.temps});
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  double get temps => widget.temps;
 
   ({String label, String emoji, Color color}) get _appreciation {
     final ecart = (temps - 10.0).abs();
@@ -14,6 +22,26 @@ class ResultScreen extends StatelessWidget {
     if (ecart <= 0.05) return (label: 'Excellent', emoji: '⭐', color: AppColors.blue);
     if (ecart <= 0.20) return (label: 'Bien', emoji: '👍', color: Colors.white70);
     return (label: 'Raté', emoji: '😅', color: Colors.white38);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Retour haptique adapté à la précision du résultat.
+    final ecart = (temps - 10.0).abs();
+    if (ecart < 0.005) {
+      // Parfait : double impact marqué façon "célébration".
+      HapticFeedback.heavyImpact();
+      Future.delayed(const Duration(milliseconds: 120), () => HapticFeedback.heavyImpact());
+    } else if (ecart <= 0.01) {
+      HapticFeedback.heavyImpact();
+    } else if (ecart <= 0.05) {
+      HapticFeedback.mediumImpact();
+    } else if (ecart <= 0.20) {
+      HapticFeedback.lightImpact();
+    } else {
+      HapticFeedback.selectionClick();
+    }
   }
 
   @override

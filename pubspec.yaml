@@ -1,4 +1,4 @@
-name: stop10_app
+name: Stop10
 description: Stop 10 — arrête le chronomètre le plus près possible de 10,00 secondes.
 publish_to: 'none'
 version: 1.0.0+1
