@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../main.dart';
+import '../utils/responsive.dart';
 import '../widgets/banner_ad_widget.dart';
 import 'result_screen.dart';
 
@@ -49,60 +50,66 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(flex: 2),
-              if (!_enCours) ...[
-                const Text(
-                  'PRÊT ?',
-                  style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900, letterSpacing: 1),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Appuie sur START, puis arrête\nle plus près possible de 10,00 s",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white54, fontSize: 14, height: 1.4),
-                ),
-              ] else
-                AnimatedBuilder(
-                  animation: _pulseController,
-                  builder: (context, child) {
-                    final scale = 1.0 + (_pulseController.value * 0.12);
-                    final opacity = 0.35 + (_pulseController.value * 0.35);
-                    return Transform.scale(
-                      scale: scale,
-                      child: Icon(Icons.adjust_rounded, color: AppColors.red.withOpacity(opacity), size: 90),
-                    );
-                  },
-                ),
-              const Spacer(flex: 3),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _enCours ? _stop : _start,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _enCours ? AppColors.blue : AppColors.red,
-                    foregroundColor: _enCours ? Colors.black : Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 22),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                    elevation: 8,
-                    shadowColor: (_enCours ? AppColors.blue : AppColors.red).withOpacity(0.5),
-                    textStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 22, letterSpacing: 2),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: r.maxContentWidth),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Spacer(flex: 2),
+                  if (!_enCours) ...[
+                    Text(
+                      'PRÊT ?',
+                      style: TextStyle(color: Colors.white, fontSize: r.font(26), fontWeight: FontWeight.w900, letterSpacing: 1),
+                    ),
+                    SizedBox(height: r.font(10)),
+                    Text(
+                      "Appuie sur START, puis arrête\nle plus près possible de 10,00 s",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white54, fontSize: r.font(14), height: 1.4),
+                    ),
+                  ] else
+                    AnimatedBuilder(
+                      animation: _pulseController,
+                      builder: (context, child) {
+                        final scale = 1.0 + (_pulseController.value * 0.12);
+                        final opacity = 0.35 + (_pulseController.value * 0.35);
+                        return Transform.scale(
+                          scale: scale,
+                          child: Icon(Icons.adjust_rounded, color: AppColors.red.withOpacity(opacity), size: r.icon(90)),
+                        );
+                      },
+                    ),
+                  const Spacer(flex: 3),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _enCours ? _stop : _start,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _enCours ? AppColors.blue : AppColors.red,
+                        foregroundColor: _enCours ? Colors.black : Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: r.isTablet ? 26 : 22),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                        elevation: 8,
+                        shadowColor: (_enCours ? AppColors.blue : AppColors.red).withOpacity(0.5),
+                        textStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: r.font(22), letterSpacing: 2),
+                      ),
+                      child: Text(_enCours ? 'STOP' : 'START'),
+                    ),
                   ),
-                  child: Text(_enCours ? 'STOP' : 'START'),
-                ),
+                  const Spacer(),
+                  const BannerAdWidget(),
+                  const SizedBox(height: 8),
+                ],
               ),
-             const Spacer(),
-              const BannerAdWidget(),
-              const SizedBox(height: 8),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
+import '../utils/responsive.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Center(
@@ -44,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           opacity: _fade,
           child: ScaleTransition(
             scale: _scale,
-            child: Image.asset('assets/icon/app_icon_foreground.png', width: 190),
+            child: Image.asset('assets/icon/app_icon_foreground.png', width: r.icon(190)),
           ),
         ),
       ),
